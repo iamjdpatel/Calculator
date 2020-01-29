@@ -58,10 +58,24 @@ enum CalculatorButton: String {
 
 class GlobalEnvironment: ObservableObject {
     
-    @Published var display = "999"
+    @Published var display = "0"
     
     func receiveInput(calculatorButton: CalculatorButton) {
-        self.display = calculatorButton.title
+        switch calculatorButton {
+        case .zero, .one, .two, .three, .four, .five, .six, .seven, .eight, .nine:
+            if self.display == "0" {
+                self.display = calculatorButton.title
+            } else {
+                self.display += calculatorButton.title
+            }
+        case .ac:
+            self.display = "0"
+        case .plus, .minus, .multiply, .divide:
+            break
+        default:
+            self.display = ""
+        }
+        
     }
     
 }
